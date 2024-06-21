@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="daece62b-f011-42d5-8f64-6f0fd42998c0" name="ex-kantemriova.ivsupport.ru" url="https://ex-kantemriova.ivsupport.ru">
+        <fileTransfer rootFolder="/home/bitrix/ext_www/ex-kantemriova.ivsupport.ru/" accessType="SFTP" host="yandex-api.ivsupport.ru" port="22" sshConfigId="c78d7292-4282-4bc6-b9d7-4d58c608f324" sshConfig="bitrix@yandex-api.ivsupport.ru:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
