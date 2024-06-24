@@ -4,11 +4,16 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) {
 }
 
 use \Bitrix\Main\Page\Asset;
+use \Bitrix\Main\Type\DateTime;
+use \Bitrix\Main\Type\Date;
 
 $mainPage = false;
 if ($APPLICATION->GetCurPage() == '/') {
 	$mainPage = true;
 }
+
+$dateTime = new DateTime();
+$hour = $dateTime->format("H");
 ?>
 <!DOCTYPE html>
 <html lang="<?=LANGUAGE_ID?>">
@@ -45,7 +50,11 @@ if ($APPLICATION->GetCurPage() == '/') {
 			<div class="logo-block"><a href="" class="logo">Мебельный магазин</a>
 			</div>
 			<div class="main-phone-block">
-				<a href="tel:84952128506" class="phone">8 (495) 212-85-06</a>
+				<?php if (($hour >= 9) && ($hour <= 18)): ?>
+					<a href="tel:84952128506" class="phone">8 (495) 212-85-06</a>
+				<?php else: ?>
+					<a href="mailto:store@store.ru" class="phone">store@store.ru</a>
+				<?php endif ?>
 				<div class="shedule">время работы с 9-00 до 18-00</div>
 			</div>
 			<div class="actions-block">

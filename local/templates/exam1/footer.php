@@ -143,7 +143,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) {
 			</div>
 		</nav>
 		<div class="contacts-block">
-			<div class="title-block">Контактная информация</div>
+			<div class="title-block"><?=GetMessage('EX_CONTACT_INFO')?></div>
 			<div class="loc-block">
 				<div class="address">ул. Летняя, стр.12, офис 512</div>
 				<div class="phone"><a href="tel:84952128506">8 (495) 212-85-06</a>
