@@ -12,28 +12,6 @@
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
 ?>
-
-<div class="review-block">
-	<div class="review-text">
-		<div class="review-text-cont">
-			Вы сможете организовать внутри компании коллективную работу над проектами в рабочих группах, вести учет и планирование времени и событий, обмениваться сообщениями и почтой через портал, проводить внутри компании видеоконференции и делать многое другое.
-			Вы сможете организовать внутри компании коллективную работу над проектами в рабочих группах, вести учет и планирование времени и событий, обмениваться сообщениями и почтой через портал, проводить внутри компании видеоконференции и делать многое другое.
-			Вы сможете организовать внутри компании коллективную работу над проектами в рабочих группах, вести учет и планирование времени и событий, обмениваться сообщениями и почтой через портал, проводить внутри компании видеоконференции и делать многое другое.
-		</div>
-		<div class="review-autor">
-			Сергей Родионов, 12 мая 2020 г., Генеральный директор, CTC-Медиа.
-		</div>
-	</div>
-	<div style="clear: both;" class="review-img-wrap"><img src="img/rew/photo_1.jpg" alt="img"></div>
-</div>
-<div class="exam-review-doc">
-	<p>Документы:</p>
-	<div class="exam-review-item-doc"><img class="rew-doc-ico" src="./img/icons/pdf_ico_40.png"><a href="">Файл 1</a></div>
-	<div class="exam-review-item-doc"><img class="rew-doc-ico" src="./img/icons/pdf_ico_40.png"><a href="">Файл 2</a></div>
-	<div class="exam-review-item-doc"><img class="rew-doc-ico" src="./img/icons/pdf_ico_40.png"><a href="">Файл 3</a></div>
-</div>
-
-
 <hr>
 <div class="review-block">
 	<div class="review-text">
@@ -49,13 +27,12 @@ $this->setFrameMode(true);
 			<?php if($arParams["DISPLAY_DATE"]!="N" && $arResult["DISPLAY_ACTIVE_FROM"]):?>
 				<?=$arResult["DISPLAY_ACTIVE_FROM"]?>г,
 			<?php endif;?>
-			<?php foreach($arResult["DISPLAY_PROPERTIES"] as $pid=>$arProperty):?>
-				<?php if(is_array($arProperty["DISPLAY_VALUE"])):?>
-					<?=implode("&nbsp;/&nbsp;", $arProperty["DISPLAY_VALUE"]);?><?php if ($pid == 'POSITION'): ?>,<?php endif ?>
-				<?php else:?>
-					<?=$arProperty["DISPLAY_VALUE"];?><?php if ($pid == 'POSITION'): ?>,<?php endif ?>
-				<?php endif?>
-			<?php endforeach;?>
+			<?php if($arResult["DISPLAY_PROPERTIES"]['POSITION']):?>
+				<?=$arResult["DISPLAY_PROPERTIES"]['POSITION']['DISPLAY_VALUE']?>,
+			<?php endif;?>
+			<?php if($arResult["DISPLAY_PROPERTIES"]['COMPANY']):?>
+				<?=$arResult["DISPLAY_PROPERTIES"]['COMPANY']['DISPLAY_VALUE']?>.
+			<?php endif;?>
 		</div>
 	</div>
 	<?php if($arParams["DISPLAY_PICTURE"]!="N" && is_array($arResult["DETAIL_PICTURE"])):?>
@@ -70,10 +47,25 @@ $this->setFrameMode(true);
 	</div>
 	<?php endif?>
 </div>
-<div class="exam-review-doc">
-	<p>Документы:</p>
-	<div class="exam-review-item-doc"><img class="rew-doc-ico" src="./img/icons/pdf_ico_40.png"><a href="">Файл 1</a></div>
-</div>
+<?php if($arResult["DISPLAY_PROPERTIES"]['DOCUMENTS']):?>
+	<div class="exam-review-doc">
+		<p><?=GetMessage('DISPLAY_DOCUMENT')?>:</p>
+		<div class="exam-review-item-doc">
+			<?php if(is_array($arResult["DISPLAY_PROPERTIES"]['DOCUMENTS']["DISPLAY_VALUE"])):?>
+				<?php foreach ($arResult['DISPLAY_PROPERTIES']['DOCUMENTS']['VALUE_ENUM'] as $document): ?>
+				<?php echo '<pre>' . print_r($document) . '</pre>' ?>
+					<img class="rew-doc-ico" src="<?=SITE_TEMPLATE_PATH?>/img/icons/pdf_ico_40.png">
+					<a href="<?=$document['SRC']?>"><?=$document['ORIGINAL_NAME']?></a>
+				<?php endforeach ?>
+			<?php else:?>
+				<img class="rew-doc-ico" src="<?=SITE_TEMPLATE_PATH?>/img/icons/pdf_ico_40.png">
+				<a href="<?=$arResult["DISPLAY_PROPERTIES"]['DOCUMENTS']['SRC']?>">
+					<?=$arResult["DISPLAY_PROPERTIES"]['DOCUMENTS']['ORIGINAL_NAME']?>
+				</a>
+			<?php endif?>
+		</div>
+	</div>
+<?php endif?>
 	<?php if($arResult["NAV_RESULT"]):?>
 		<?php if($arParams["DISPLAY_TOP_PAGER"]):?><?=$arResult["NAV_STRING"]?><br /><?php endif;?>
 		<?php echo $arResult["NAV_TEXT"];?>
