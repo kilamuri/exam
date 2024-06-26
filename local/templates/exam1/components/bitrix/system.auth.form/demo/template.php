@@ -1,28 +1,25 @@
-<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
-
-if ($arResult ['SHOW_ERRORS'] == 'Y' && $arResult ['ERROR'])
-	ShowMessage ( $arResult ['ERROR_MESSAGE'] );
-
+<?php if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 //dump($arParams);
-//dump($arResult);
+//var_dump($arResult);
 CJSCore::Init();
-?>
-<?
-if($arResult["FORM_TYPE"] == "login")
-{
 ?>
 <nav class="menu-block">
 	<ul>
-		<li class="att popup-wrap"><a id="hd_singin_but_open" href="" class="btn-toggle"><?=GetMessage("AUTH_LOGIN_LINK_TEXT")?></a>
+		<?php if($arResult['SHOW_ERRORS'] == 'Y' && $arResult['ERROR']){
+			ShowMessage($arResult['ERROR_MESSAGE']);
+		} ?>
+<?php if($arResult["FORM_TYPE"] == "login"): ?>
+		<li class="att popup-wrap">
+			<a id="hd_singin_but_open" href="" class="btn-toggle"><?=GetMessage("AUTH_LOGIN_LINK_TEXT")?></a>
 			<form class="frm-login popup-block" name="system_auth_form<?=$arResult["RND"]?>" method="post" target="_top" action="<?=$arResult["AUTH_URL"]?>">
 				<div class="frm-title"><?=GetMessage("AUTH_LOGIN_LINK_TEXT")?></div>
 				<a href="" class="btn-close"><?=GetMessage("AUTH_LOGIN_LINK_CLOSE_TEXT")?></a>
-				<?if($arResult["BACKURL"] <> ''):?>
+				<?php if($arResult["BACKURL"] <> ''):?>
 					<input type="hidden" name="backurl" value="<?=$arResult["BACKURL"]?>" />
-				<?endif?>
-				<?foreach ($arResult["POST"] as $key => $value):?>
+				<?php endif?>
+				<?php foreach ($arResult["POST"] as $key => $value):?>
 					<input type="hidden" name="<?=$key?>" value="<?=$value?>" />
-				<?endforeach?>
+				<?php endforeach?>
 					<input type="hidden" name="AUTH_FORM" value="Y" />
 					<input type="hidden" name="TYPE" value="AUTH" />
 				<div class="frm-row">
@@ -47,7 +44,7 @@ if($arResult["FORM_TYPE"] == "login")
 				</div>
 				<div class="frm-row">
 					<div class="frm-chk">
-						<input type="checkbox" id="login" name="USER_REMEMBER" value="Y"> <label for="login"><?=GetMessage("AUTH_REMEMBER_ME_SHORT")?></label>
+						<input type="checkbox" id="login" name="USER_REMEMBER" value="Y"><label for="login"><?=GetMessage("AUTH_REMEMBER_ME_SHORT")?></label>
 					</div>
 				</div>
 				<div class="frm-row">
@@ -55,8 +52,12 @@ if($arResult["FORM_TYPE"] == "login")
 				</div>
 			</form></li>
 		<li><a href=""><?=GetMessage("AUTH_REGISTER")?></a></li>
-	</ul>
-</nav>
-<?
-}
-?>
+<?php elseif ($arResult['FORM_TYPE'] == 'logout'): ?>
+			<li>
+				<a href="<?=$arResult['PROFILE_URL']?>"><?=$arResult['USER_NAME']?> [<?=$arResult['USER_LOGIN']?>]</a>
+			</li>
+			<li><a href="<?=$arResult['BACKURL'] . '?logout=yes'?>">Выйти</a>
+			</li>
+<?php endif ?>
+		</ul>
+	</nav>
