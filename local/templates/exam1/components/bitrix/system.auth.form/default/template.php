@@ -122,11 +122,7 @@ $APPLICATION->IncludeComponent("bitrix:socserv.auth.form", "",
 );
 ?>
 <?endif?>
-
-<?
-elseif($arResult["FORM_TYPE"] == "otp"):
-?>
-
+<?elseif($arResult["FORM_TYPE"] == "otp"):?>
 <form name="system_auth_form<?=$arResult["RND"]?>" method="post" target="_top" action="<?=$arResult["AUTH_URL"]?>">
 <?if($arResult["BACKURL"] <> ''):?>
 	<input type="hidden" name="backurl" value="<?=$arResult["BACKURL"]?>" />
@@ -162,11 +158,7 @@ elseif($arResult["FORM_TYPE"] == "otp"):
 		</tr>
 	</table>
 </form>
-
-<?
-else:
-?>
-
+<? else: ?>
 <form action="<?=$arResult["AUTH_URL"]?>">
 	<table width="95%">
 		<tr>
