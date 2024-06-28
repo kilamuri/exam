@@ -11,6 +11,7 @@
 /** @var string $componentPath */
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
+$noImage = SITE_TEMPLATE_PATH . '/img/rew/no_photo.jpg';
 ?>
 <hr>
 	<?php if($arParams["DISPLAY_TOP_PAGER"]):?>
@@ -23,7 +24,6 @@ $this->setFrameMode(true);
 	?>
 	<div class="review-block" id="<?=$this->GetEditAreaId($arItem['ID']);?>">
 		<div class="review-text">
-
 			<div class="review-block-title">
 				<span class="review-block-name">
 					<?php if($arParams["DISPLAY_NAME"]!="N" && $arItem["NAME"]):?>
@@ -47,29 +47,31 @@ $this->setFrameMode(true);
 					<?php endforeach;?>
 				</span>
 			</div>
-
 		<?php if($arParams["DISPLAY_PREVIEW_TEXT"]!="N" && $arItem["PREVIEW_TEXT"]):?>
 			<div class="review-text-cont"><?=$arItem["PREVIEW_TEXT"];?></div>
 		<?php endif;?>
-
 		</div>
-		<?php if($arParams["DISPLAY_PICTURE"]!="N" && is_array($arItem["PREVIEW_PICTURE"])):?>
+		<?php if($arParams["DISPLAY_PICTURE"]!="N"):?>
 		<div class="review-img-wrap">
-			<?php if(!$arParams["HIDE_LINK_WHEN_NO_DETAIL"] || ($arItem["DETAIL_TEXT"] && $arResult["USER_HAVE_ACCESS"])):?>
-				<a href="<?=$arItem["DETAIL_PAGE_URL"]?>">
+			<?php if (is_array($arItem["PREVIEW_PICTURE"])): ?>
+				<?php if(!$arParams["HIDE_LINK_WHEN_NO_DETAIL"] || ($arItem["DETAIL_TEXT"] && $arResult["USER_HAVE_ACCESS"])):?>
+					<a href="<?=$arItem["DETAIL_PAGE_URL"]?>">
+						<img src="<?=$arItem["PREVIEW_PICTURE"]["SRC"]?>"
+							 width="<?=$arItem["PREVIEW_PICTURE"]["WIDTH"]?>"
+							 height="<?=$arItem["PREVIEW_PICTURE"]["HEIGHT"]?>"
+							 alt="<?=$arItem["PREVIEW_PICTURE"]["ALT"]?>"
+							 title="<?=$arItem["PREVIEW_PICTURE"]["TITLE"]?>"
+						/></a>
+				<?php else:?>
 					<img src="<?=$arItem["PREVIEW_PICTURE"]["SRC"]?>"
 						 width="<?=$arItem["PREVIEW_PICTURE"]["WIDTH"]?>"
 						 height="<?=$arItem["PREVIEW_PICTURE"]["HEIGHT"]?>"
 						 alt="<?=$arItem["PREVIEW_PICTURE"]["ALT"]?>"
-						 title="<?=$arItem["PREVIEW_PICTURE"]["TITLE"]?>"
-					/></a>
+						 title="<?=$arItem["PREVIEW_PICTURE"]["TITLE"]?>" />
+				<?php endif;?>
 			<?php else:?>
-				<img src="<?=$arItem["PREVIEW_PICTURE"]["SRC"]?>"
-					 width="<?=$arItem["PREVIEW_PICTURE"]["WIDTH"]?>"
-					 height="<?=$arItem["PREVIEW_PICTURE"]["HEIGHT"]?>"
-					 alt="<?=$arItem["PREVIEW_PICTURE"]["ALT"]?>"
-					 title="<?=$arItem["PREVIEW_PICTURE"]["TITLE"]?>" />
-			<?php endif;?>
+			<img src="<?=$noImage?>"/>
+			<?php endif ?>
 		</div>
 		<?php endif?>
 	</div>

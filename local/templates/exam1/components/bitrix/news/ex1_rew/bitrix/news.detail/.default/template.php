@@ -11,6 +11,7 @@
 /** @var string $componentPath */
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
+$noImage = SITE_TEMPLATE_PATH . '/img/rew/no_photo.jpg';
 ?>
 <hr>
 <div class="review-block">
@@ -25,7 +26,7 @@ $this->setFrameMode(true);
 				<?=$arResult["NAME"]?>,
 			<?php endif;?>
 			<?php if($arParams["DISPLAY_DATE"]!="N" && $arResult["DISPLAY_ACTIVE_FROM"]):?>
-				<?=$arResult["DISPLAY_ACTIVE_FROM"]?>г,
+				<?=$arResult["DISPLAY_ACTIVE_FROM"]?><?=GetMessage('YEAR')?>,
 			<?php endif;?>
 			<?php if($arResult["DISPLAY_PROPERTIES"]['POSITION']):?>
 				<?=$arResult["DISPLAY_PROPERTIES"]['POSITION']['DISPLAY_VALUE']?>,
@@ -35,8 +36,9 @@ $this->setFrameMode(true);
 			<?php endif;?>
 		</div>
 	</div>
-	<?php if($arParams["DISPLAY_PICTURE"]!="N" && is_array($arResult["DETAIL_PICTURE"])):?>
+	<?php if($arParams["DISPLAY_PICTURE"]!="N"):?>
 	<div style="clear: both;" class="review-img-wrap">
+	<?php if (is_array($arResult["DETAIL_PICTURE"])): ?>
 		<img class="detail_picture"
 			 src="<?=$arResult["DETAIL_PICTURE"]["SRC"]?>"
 			 width="<?=$arResult["DETAIL_PICTURE"]["WIDTH"]?>"
@@ -44,26 +46,24 @@ $this->setFrameMode(true);
 			 alt="<?=$arResult["DETAIL_PICTURE"]["ALT"]?>"
 			 title="<?=$arResult["DETAIL_PICTURE"]["TITLE"]?>"
 		/>
+	<?php else: ?>
+		<img class="detail_picture" src="<?=$noImage?>" />
+	<?php endif ?>
 	</div>
 	<?php endif?>
 </div>
 <?php if($arResult["DISPLAY_PROPERTIES"]['DOCUMENTS']):?>
 	<div class="exam-review-doc">
 		<p><?=GetMessage('DISPLAY_DOCUMENT')?>:</p>
+				<?php foreach ($arResult['DISPLAY_PROPERTIES']['DOCUMENTS']['VALUE'] as $documentId): ?>
 		<div class="exam-review-item-doc">
-			<?php if(is_array($arResult["DISPLAY_PROPERTIES"]['DOCUMENTS']["DISPLAY_VALUE"])):?>
-				<?php foreach ($arResult['DISPLAY_PROPERTIES']['DOCUMENTS']['VALUE_ENUM'] as $document): ?>
-				<?php echo '<pre>' . print_r($document) . '</pre>' ?>
+				<?php $srcFile = CFile::getPath($documentId);
+					$obFile = Cfile::GetById($documentId);
+					$arFile = $obFile->fetch(); ?>
 					<img class="rew-doc-ico" src="<?=SITE_TEMPLATE_PATH?>/img/icons/pdf_ico_40.png">
-					<a href="<?=$document['SRC']?>"><?=$document['ORIGINAL_NAME']?></a>
-				<?php endforeach ?>
-			<?php else:?>
-				<img class="rew-doc-ico" src="<?=SITE_TEMPLATE_PATH?>/img/icons/pdf_ico_40.png">
-				<a href="<?=$arResult["DISPLAY_PROPERTIES"]['DOCUMENTS']['SRC']?>">
-					<?=$arResult["DISPLAY_PROPERTIES"]['DOCUMENTS']['ORIGINAL_NAME']?>
-				</a>
-			<?php endif?>
+					<a href="<?=$srcFile?>"><?=$arFile['ORIGINAL_NAME']?></a>
 		</div>
+				<?php endforeach ?>
 	</div>
 <?php endif?>
 	<?php if($arResult["NAV_RESULT"]):?>
