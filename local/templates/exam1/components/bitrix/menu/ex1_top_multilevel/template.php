@@ -13,7 +13,9 @@ $previousLevel = 0; ?>
 	<?php endif?>
 	<?php if ($arItem["IS_PARENT"]):?>
 		<?php if ($arItem["DEPTH_LEVEL"] == 1):?>
-				<li><a href="<?=$arItem["LINK"]?>" class=""><?=$arItem["TEXT"]?></a>
+				<li><a href="<?=$arItem["LINK"]?>"
+					   class="<?php if($arItem['PARAMS']['COLOR']):?><?=$arItem['PARAMS']['COLOR']?><?php endif ?>">
+						<?=$arItem["TEXT"]?></a>
 					<ul>
 						<?php if ($arItem['PARAMS']['DESCRIPTION']): ?>
 							<div class="menu-text"><?=$arItem['PARAMS']['DESCRIPTION']?></div>
