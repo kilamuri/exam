@@ -1,6 +1,4 @@
 <?php if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
-//dump($arParams);
-//var_dump($arResult);
 CJSCore::Init();
 ?>
 <nav class="menu-block">
@@ -96,7 +94,8 @@ CJSCore::Init();
 	<?php endforeach?>
 	<?=bitrix_sessid_post()?>
 	<input type="hidden" name="logout" value="yes" />
-	<li><input type="submit" name="logout_butt" value="<?=GetMessage("AUTH_LOGOUT_BUTTON")?>" /></li>
+	<li><a name="logout_butt" href="?logout=yes&sessid=<?=$_SESSION['fixed_session_id']?>">
+			<?=GetMessage("AUTH_LOGOUT_BUTTON")?></a></li>
 </form>
 <?php endif ?>
 		</ul>
